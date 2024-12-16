@@ -73,7 +73,7 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 title: const Text(
-                  'Valeri Gokadze',
+                  'Dawan',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 subtitle: const Text('WEB & APP Developer'),
