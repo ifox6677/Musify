@@ -47,22 +47,8 @@ bool isUpdateChecked = false;
 
 final appLanguages = <String, String>{
   'English': 'en',
-  'Arabic': 'ar',
   'French': 'fr',
-  'Galician': 'gl',
-  'Georgian': 'ka',
-  'German': 'de',
-  'Greek': 'el',
-  'Indonesian': 'id',
-  'Italian': 'it',
-  'Japanese': 'ja',
-  'Korean': 'ko',
-  'Russian': 'ru',
-  'Polish': 'pl',
-  'Portuguese': 'pt',
-  'Spanish': 'es',
-  'Turkish': 'tr',
-  'Ukrainian': 'uk',
+  '简体中文': 'cn',
 };
 
 final appSupportedLocales = appLanguages.values
