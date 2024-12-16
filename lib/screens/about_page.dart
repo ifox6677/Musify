@@ -67,7 +67,7 @@ class AboutPage extends StatelessWidget {
                     image: DecorationImage(
                       fit: BoxFit.fill,
                       image: NetworkImage(
-                        'https://avatars.githubusercontent.com/u/79704324?v=4',
+                        'https://avatars.githubusercontent.com/u/181878671?v=4',
                       ),
                     ),
                   ),
@@ -84,7 +84,7 @@ class AboutPage extends StatelessWidget {
                       tooltip: 'Github',
                       onPressed: () {
                         launchURL(
-                          Uri.parse('https://github.com/gokadzev'),
+                          Uri.parse('https://github.com/xray6677'),
                         );
                       },
                     ),
