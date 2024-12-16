@@ -40,7 +40,7 @@ class AboutPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 17, 8, 0),
               child: Text(
-                'Musify  | $appVersion',
+                'afa音乐  | $appVersion',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 24,
