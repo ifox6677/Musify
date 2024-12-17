@@ -30,7 +30,7 @@
     </queries>
 
     <application
-        android:label="Musify"
+        android:label="afa音乐"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"
