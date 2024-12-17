@@ -47,7 +47,6 @@ bool isUpdateChecked = false;
 
 final appLanguages = <String, String>{
   'English': 'en',
-  'French': 'fr',
   '简体中文': 'zh',
 };
 
