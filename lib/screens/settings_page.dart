@@ -599,14 +599,14 @@ class SettingsPage extends StatelessWidget {
               primaryColor,
             ),
 
-            CustomBar(
-              context.l10n!.licenses,
-              FluentIcons.document_24_filled,
-              borderRadius: commonCustomBarRadiusFirst,
-              onTap: () => NavigationManager.router.go(
-                '/settings/license',
-              ),
-            ),
+            //CustomBar(
+              //context.l10n!.licenses,
+              //FluentIcons.document_24_filled,
+              //borderRadius: commonCustomBarRadiusFirst,
+              //onTap: () => NavigationManager.router.go(
+                //'/settings/license',
+              //),
+            //),
             CustomBar(
               '${context.l10n!.copyLogs} (${logger.getLogCount()})',
               FluentIcons.error_circle_24_filled,
