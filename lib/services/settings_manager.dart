@@ -62,9 +62,9 @@ final audioQualitySetting = ValueNotifier<String>(
 );
 
 Locale languageSetting = Locale(
-  appLanguages[Hive.box('settings').get('language', defaultValue: 'English')
+  appLanguages[Hive.box('settings').get('language', defaultValue: '简体中文')
           as String] ??
-      'en',
+      'zh',
 );
 
 final themeModeSetting =
