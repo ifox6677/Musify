@@ -577,10 +577,10 @@ class SettingsPage extends StatelessWidget {
                     ),
                   // CATEGORY: BECOME A SPONSOR
 
-                  SectionTitle(
-                    context.l10n!.becomeSponsor,
-                    primaryColor,
-                  ),
+                  //SectionTitle(
+                    //context.l10n!.becomeSponsor,
+                    //primaryColor,
+                  //),
 
                 
             // CATEGORY: OTHERS
@@ -616,7 +616,7 @@ class SettingsPage extends StatelessWidget {
             ),
           ],
         ),
-     // ),
+      ),
     );
-  //}
+  }
 }
