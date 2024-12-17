@@ -589,11 +589,7 @@ class SettingsPage extends StatelessWidget {
                     iconColor: Colors.white,
                     textColor: Colors.white,
                     borderRadius: commonCustomBarRadius,
-                    onTap: () => {
-                      launchURL(
-                        Uri.parse('https://ko-fi.com/gokadzev'),
-                      ),
-                    },
+                    onTap: () {},
                   ),
                 ],
               ),
