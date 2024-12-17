@@ -1,94 +1,42 @@
-Copyright 2011 The Paytone Project Authors (https://github.com/googlefonts/paytoneFont),
-with Reserved Font Names "Paytone" and "Paytone One".
+版权所有声明
+版权所有 © 2011 The Paytone Project Authors (https://github.com/googlefonts/paytoneFont)，
+保留字体名称“Paytone”和“Paytone One”。
 
-This Font Software is licensed under the SIL Open Font License, Version 1.1.
-This license is copied below, and is also available with a FAQ at:
+本字体软件依据 SIL Open Font License 1.1 版 进行许可。
+该许可证的完整文本如下，并可在以下网址获取相关常见问题解答（FAQ）：
 http://scripts.sil.org/OFL
 
+SIL 开放字体许可证 1.1 版 - 2007年2月26日
+前言
+开放字体许可证（OFL）的目标是促进全球合作的字体项目发展，支持学术和语言社区的字体创作工作，并提供一个自由开放的框架，使字体能够与他人共享和改进。
 
------------------------------------------------------------
-SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
------------------------------------------------------------
+OFL 允许授权字体被自由使用、研究、修改和再分发，但不能单独销售。字体，包括任何衍生作品，可以与任何软件捆绑、嵌入、再分发和/或销售，前提是衍生作品不使用任何保留的字体名称。此外，字体及其衍生品不得在任何其他类型的许可证下发布。此许可证要求字体软件始终保持在此许可之下，但不适用于使用字体或其衍生品创建的文档。
 
-PREAMBLE
-The goals of the Open Font License (OFL) are to stimulate worldwide
-development of collaborative font projects, to support the font creation
-efforts of academic and linguistic communities, and to provide a free and
-open framework in which fonts may be shared and improved in partnership
-with others.
+定义
+“字体软件” 指由版权所有者依据本许可证发布的、并已明确标记为“字体软件”的文件集合。这些文件可能包括源文件、构建脚本和文档。
+“保留字体名称” 指版权声明之后指定为“保留字体名称”的任何名称。
+“原始版本” 指版权所有者分发的字体软件组件集合。
+“修改版本” 指通过部分或全部增加、删除或替换原始版本的任何组件，改变格式，或将字体软件移植到新环境而产生的衍生品。
+“作者” 指对字体软件做出贡献的设计师、工程师、程序员、技术作者或其他人员。
+许可与条件
+在免费获得字体软件副本的前提下，任何人都可以使用、研究、复制、合并、嵌入、修改、再分发和销售修改或未修改的字体软件，需遵守以下条件：
 
-The OFL allows the licensed fonts to be used, studied, modified and
-redistributed freely as long as they are not sold by themselves. The
-fonts, including any derivative works, can be bundled, embedded, 
-redistributed and/or sold with any software provided that any reserved
-names are not used by derivative works. The fonts and derivatives,
-however, cannot be released under any other type of license. The
-requirement for fonts to remain under this license does not apply
-to any document created using the fonts or their derivatives.
+字体软件及其任何独立组件（原始版本或修改版本）不得单独销售。
 
-DEFINITIONS
-"Font Software" refers to the set of files released by the Copyright
-Holder(s) under this license and clearly marked as such. This may
-include source files, build scripts and documentation.
+字体软件的原始或修改版本可与任何软件捆绑、再分发和/或销售，前提是每一份副本都包含上述版权声明和本许可证。
 
-"Reserved Font Name" refers to any names specified as such after the
-copyright statement(s).
+这些内容可以作为独立的文本文件提供，或者以人类可读的文件头形式存在，或者以机器可读的元数据字段形式嵌入到文本或二进制文件中，只要这些字段可被用户轻松查看即可。
+未经相应版权持有人的明确书面许可，字体软件的修改版本不得使用保留字体名称。
 
-"Original Version" refers to the collection of Font Software components as
-distributed by the Copyright Holder(s).
+此限制仅适用于向用户呈现的主要字体名称。
+字体软件的版权持有者或作者的姓名不得被用于推广、认可或宣传任何修改版本，除非获得他们的明确书面许可，或仅用于感谢其贡献。
 
-"Modified Version" refers to any derivative made by adding to, deleting,
-or substituting -- in part or in whole -- any of the components of the
-Original Version, by changing formats or by porting the Font Software to a
-new environment.
+字体软件，无论修改与否，部分或整体，必须完全根据本许可证分发，且不得在任何其他许可证下分发。
 
-"Author" refers to any designer, engineer, programmer, technical
-writer or other person who contributed to the Font Software.
+此要求不适用于使用字体软件创建的任何文档。
+终止条款
+如果未遵守上述任何条件，本许可证将自动失效。
 
-PERMISSION & CONDITIONS
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of the Font Software, to use, study, copy, merge, embed, modify,
-redistribute, and sell modified and unmodified copies of the Font
-Software, subject to the following conditions:
+免责声明
+本字体软件按“原样”提供，不附带任何明示或暗示的担保，包括但不限于适销性、适用于特定用途及不侵犯版权、专利、商标或其他权利的担保。在任何情况下，版权持有者均不对任何索赔、损害赔偿或其他责任承担责任，包括因使用或无法使用字体软件，或与字体软件的其他交易所引起的任何一般性、特殊性、间接性、附带性或结果性损害赔偿，无论是基于合同、侵权行为还是其他法律理论。
 
-1) Neither the Font Software nor any of its individual components,
-in Original or Modified Versions, may be sold by itself.
-
-2) Original or Modified Versions of the Font Software may be bundled,
-redistributed and/or sold with any software, provided that each copy
-contains the above copyright notice and this license. These can be
-included either as stand-alone text files, human-readable headers or
-in the appropriate machine-readable metadata fields within text or
-binary files as long as those fields can be easily viewed by the user.
-
-3) No Modified Version of the Font Software may use the Reserved Font
-Name(s) unless explicit written permission is granted by the corresponding
-Copyright Holder. This restriction only applies to the primary font name as
-presented to the users.
-
-4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
-Software shall not be used to promote, endorse or advertise any
-Modified Version, except to acknowledge the contribution(s) of the
-Copyright Holder(s) and the Author(s) or with their explicit written
-permission.
-
-5) The Font Software, modified or unmodified, in part or in whole,
-must be distributed entirely under this license, and must not be
-distributed under any other license. The requirement for fonts to
-remain under this license does not apply to any document created
-using the Font Software.
-
-TERMINATION
-This license becomes null and void if any of the above conditions are
-not met.
-
-DISCLAIMER
-THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
-OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
-COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
-DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
-OTHER DEALINGS IN THE FONT SOFTWARE.
