@@ -582,21 +582,7 @@ class SettingsPage extends StatelessWidget {
                     primaryColor,
                   ),
 
-                  CustomBar(
-                    context.l10n!.sponsorProject,
-                    FluentIcons.heart_24_filled,
-                    backgroundColor: primaryColor,
-                    iconColor: Colors.white,
-                    textColor: Colors.white,
-                    borderRadius: commonCustomBarRadius,
-                    onTap: () => {
-                      launchURL(
-                        Uri.parse('https://ko-fi.com/gokadzev'),
-                      ),
-                    },
-                  ),
-                ],
-              ),
+                
             // CATEGORY: OTHERS
             SectionTitle(
               context.l10n!.others,
