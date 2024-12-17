@@ -582,33 +582,21 @@ class SettingsPage extends StatelessWidget {
                     primaryColor,
                   ),
 
-        					CustomBar(
-        					  context.l10n!.sponsorProject, // 仍保留原来的显示文本
-        					  FluentIcons.heart_24_filled,
-        					  backgroundColor: primaryColor,
-        					  iconColor: Colors.white,
-        					  textColor: Colors.white,
-        					  borderRadius: commonCustomBarRadius,
-        					  onTap: () {
-        						// 导航到一个新的页面
-        						Navigator.of(context).push(
-        						  MaterialPageRoute(
-        							builder: (context) => Scaffold(
-        							  appBar: AppBar(
-        								title: Text('提示'),
-        							  ),
-        							  body: Center(
-        								child: Text(
-        								  '多谢支持',
-        								  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        								),
-        							  ),
-        							),
-        						  ),
-        						);
-        					  },
-        					),
-
+                  CustomBar(
+                    context.l10n!.sponsorProject,
+                    FluentIcons.heart_24_filled,
+                    backgroundColor: primaryColor,
+                    iconColor: Colors.white,
+                    textColor: Colors.white,
+                    borderRadius: commonCustomBarRadius,
+                    onTap: () => {
+                      launchURL(
+                        Uri.parse('https://ko-fi.com/gokadzev'),
+                      ),
+                    },
+                  ),
+                ],
+              ),
             // CATEGORY: OTHERS
             SectionTitle(
               context.l10n!.others,
