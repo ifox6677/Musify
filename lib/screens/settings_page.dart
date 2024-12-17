@@ -577,12 +577,26 @@ class SettingsPage extends StatelessWidget {
                     ),
                   // CATEGORY: BECOME A SPONSOR
 
-                  //SectionTitle(
-                    //context.l10n!.becomeSponsor,
-                    //primaryColor,
-                  //),
+                  SectionTitle(
+                    context.l10n!.becomeSponsor,
+                    primaryColor,
+                  ),
 
-                
+                  CustomBar(
+                    context.l10n!.sponsorProject,
+                    FluentIcons.heart_24_filled,
+                    backgroundColor: primaryColor,
+                    iconColor: Colors.white,
+                    textColor: Colors.white,
+                    borderRadius: commonCustomBarRadius,
+                    onTap: () => {
+                      launchURL(
+                        Uri.parse('https://ko-fi.com/gokadzev'),
+                      ),
+                    },
+                  ),
+                ],
+              ),
             // CATEGORY: OTHERS
             SectionTitle(
               context.l10n!.others,
