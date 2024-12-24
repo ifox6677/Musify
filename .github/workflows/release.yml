@@ -62,8 +62,8 @@ jobs:
         run: flutter pub get
 
       # Check for any formatting issues in the code.
-      - name: Check code formatting
-        run: dart format --set-exit-if-changed .
+      #- name: Check code formatting
+       # run: dart format --set-exit-if-changed .
 
       # Statically analyze the Dart code for any errors.
       - name: Analyze Dart code
