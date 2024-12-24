@@ -1,58 +1,59 @@
-on: workflow_dispatch
-name: Test, Build and Pre Release apk
+on:
+  workflow_dispatch:  # 允许手动触发工作流
+
+name: Build and Upload APK
+
 env:
   PROPERTIES_PATH: "./android/key.properties"
+
 jobs:
   build:
-    name: Build APK
+    name: Build and Upload APK
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    # Setup Java environment in order to build the Android app.
-    - uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: '17.x'
-    # Gradle cache for faster builds
-    - uses: actions/cache@v4
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-    # Setup the flutter environment.
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: "stable"
+      - uses: actions/checkout@v4
+      # 设置 Java 环境以便构建 Android 应用
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17.x'
 
-    #
-    - name: Configure signing properties
-      run: |
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" > ${{env.PROPERTIES_PATH}}
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
-          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
-    - name: Decode keystore file
-      run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > android/app/key.jks
+      # Gradle 缓存加速构建
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-    # Get flutter dependencies.
-    - run: flutter pub get
-    # Check for any formatting issues in the code.
-    #- run: dart format --set-exit-if-changed .
-    # Statically analyze the Dart code for any errors.
-    - run: flutter analyze .
-    # Build universal apk.
-    - run: flutter build apk --release --flavor github
-    - uses: svenstaro/upload-release-action@v2
-      with:
-        repo_name: gokadzev/Musify
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/app/outputs/flutter-apk/app-github-release.apk
-        asset_name: Musify.apk
-        tag: ${{ github.ref }}
-        prerelease: true
-        overwrite: true
-        body: "**New Musify Pre-Release!** \n
-        with pre-release / [BETA] builds you have access to the latest build of the app before it is released as stable-release version. Only use pre-release if you test the app, provide feedback, and help us improve its performance. Please note that pre-release versions of the app may be pretty unstable. You may experience crashes, bugs, or other issues while using the app. This is because pre-release version is still in development.
-        "
+      # 设置 Flutter 环境
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      # 配置签名属性
+      - name: Configure signing properties
+        run: |
+            echo "keyAlias=${{ secrets.KEY_ALIAS }}" > ${{env.PROPERTIES_PATH}}
+            echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+            echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+
+      # 解码 keystore 文件
+      - name: Decode keystore file
+        run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > android/app/key.jks
+
+      # 获取 Flutter 依赖
+      - run: flutter pub get
+
+      # 构建 APK
+      - name: Build APK
+        run: flutter build apk --release --flavor github
+
+      # 上传 APK 文件
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: Musify-APK
+          path: build/app/outputs/flutter-apk/app-github-release.apk
