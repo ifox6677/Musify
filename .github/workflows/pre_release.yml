@@ -33,7 +33,8 @@ jobs:
           echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
           echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
     #
-    - run: echo "${{ secrets.KEYSTORE2 }}" | base64 --decode > android/app/key.jks
+    - name: Decode keystore file
+      run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > android/app/key.jks
 
     # Get flutter dependencies.
     - run: flutter pub get
