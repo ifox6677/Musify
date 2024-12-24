@@ -28,11 +28,11 @@ jobs:
         channel: "stable"
 
     #
-    - run: |
-          echo keyPassword=\${{ secrets.KEY_STORE }} > ${{env.PROPERTIES_PATH}}
-          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
-    #
+    - name: Configure signing properties
+      run: |
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" > ${{env.PROPERTIES_PATH}}
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
     - name: Decode keystore file
       run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > android/app/key.jks
 
