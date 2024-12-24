@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:  # Allow manual triggering from GitHub UI
+  workflow_dispatch:  # 允许从 GitHub UI 手动触发
 
 name: Build and Release APK
 
@@ -12,29 +12,27 @@ env:
 jobs:
   build:
     name: Build and Release APK
-    if: |
-      contains(github.event.head_commit.message, 'Update:') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Extract version from commit message
+      # 提取版本号
       - name: Extract version
         id: extract_version
         run: |
           version=$(echo ${{ github.event.head_commit.message }} | grep -oP '(?<=Update: v)\d+\.\d+\.\d+')
           echo "version=${version}" >> $GITHUB_OUTPUT
 
-      # Set up Java environment
+      # 设置 Java 环境
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17.x'
 
-      # Cache Gradle dependencies
+      # 缓存 Gradle 依赖
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
         with:
@@ -45,36 +43,36 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Set up Flutter environment
+      # 设置 Flutter 环境
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
 
-      # Configure signing properties
+      # 配置签名属性
       - name: Configure signing properties
         run: |
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" > ${{env.PROPERTIES_PATH}}
           echo "storePassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> ${{env.PROPERTIES_PATH}}
 
-      # Decode keystore file
+      # 解码 keystore 文件
       - name: Decode keystore file
         run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > android/app/key.jks
 
-      # Get Flutter dependencies
+      # 获取 Flutter 依赖
       - name: Get Flutter dependencies
         run: flutter pub get
 
-      # Analyze Dart code
+      # 分析 Dart 代码
       - name: Analyze Dart code
         run: flutter analyze .
 
-      # Build APK
+      # 构建 APK
       - name: Build APK
         run: flutter build apk --release --split-per-abi
 
-      # Release APK
+      # 发布 APK
       - name: Release APK
         uses: svenstaro/upload-release-action@v2
         with:
