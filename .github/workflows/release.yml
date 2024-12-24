@@ -74,7 +74,7 @@ jobs:
 
       # 构建 APK
       - name: Build APK
-        run: flutter build apk --release --split-per-abi 
+        run: flutter build apk --release
 
       # 列出构建目录（调试用）
       - name: List build directory
