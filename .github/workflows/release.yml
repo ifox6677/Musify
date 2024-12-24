@@ -53,9 +53,9 @@ jobs:
       # 配置签名属性
       - name: Configure signing properties
         run: |
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" > ${{env.PROPERTIES_PATH}}
-          echo "storePassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> ${{env.PROPERTIES_PATH}}
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" > ${{env.PROPERTIES_PATH}}
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> ${{env.PROPERTIES_PATH}}
 
       # 解码 keystore 文件
       - name: Decode keystore file
