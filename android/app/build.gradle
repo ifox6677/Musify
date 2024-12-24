@@ -52,7 +52,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.gokadzev.musify"
+        applicationId "com.xray8899.afamusic"
         minSdk 24
         targetSdk 34
         versionCode flutterVersionCode.toInteger()
