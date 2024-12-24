@@ -22,8 +22,9 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          version=$(echo ${{ github.event.head_commit.message }} | grep -oP '(?<=Update: v)\d+\.\d+\.\d+')
+          version=$(echo "Update release.yml" | grep -oP '(?<=Update: v)\d+\.\d+\.\d+' || true)
           echo "version=${version}" >> $GITHUB_OUTPUT
+
 
       # 设置 Java 环境
       - name: Set up Java
