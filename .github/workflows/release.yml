@@ -22,9 +22,8 @@ jobs:
       - name: Extract version
         id: extract_version
         run: |
-          version=$(echo "Update release.yml" | grep -oP '(?<=Update: v)\d+\.\d+\.\d+' || true)
+          version=$(echo "${{ github.event.head_commit.message }}" | grep -oP '(?<=Update: v)\d+\.\d+\.\d+' || true)
           echo "version=${version}" >> $GITHUB_OUTPUT
-
 
       # 设置 Java 环境
       - name: Set up Java
@@ -69,9 +68,17 @@ jobs:
       - name: Analyze Dart code
         run: flutter analyze .
 
+      # 清理项目
+      - name: Clean Flutter project
+        run: flutter clean
+
       # 构建 APK
       - name: Build APK
-        run: flutter build apk --release --split-per-abi
+        run: flutter build apk --release --split-per-abi --no-build-cache
+
+      # 列出构建目录（调试用）
+      - name: List build directory
+        run: ls -al build/app/outputs/flutter-apk/
 
       # 发布 APK
       - name: Release APK
