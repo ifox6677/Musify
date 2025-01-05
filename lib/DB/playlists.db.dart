@@ -204,7 +204,7 @@ List<Map<String, dynamic>> playlistsDB = [
   },
   {
     'ytid': 'PLvVNZSE0M_YcCO_nSoz_KmQCaOX-9-QwT',
-    'title': '【 00 年代華語金曲 】  Back to the 00's',
+    'title': '【 00 年代華語金曲 】  Back to the 00\'s',
     'image': 'https://i.scdn.co/image/ab67706f000000024d023977376ec4f30795ecf4',
     'list': [],
   },
