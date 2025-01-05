@@ -772,7 +772,7 @@ List albumsDB = [
   },
   {
     'ytid': 'PLDgLLnSBXR_PgREg7MLwTDpKc_xGT3Y0Z',
-    'title': '周華健【'94風雨無阻】演唱會',
+    'title': '周華健【\'94風雨無阻】演唱會',
     'image':
         'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/cd/cb/39/cdcb393c-14e6-786a-b120-320957c25699/886447501610.jpg/250x250bb.jpg',
     'isAlbum': true,
