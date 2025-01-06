@@ -26,25 +26,14 @@ class LyricsManager {
   Future<String?> fetchLyrics(String artistName, String title) async {
     title = title.replaceAll('Lyrics', '').replaceAll('Karaoke', '');
 
-    final lyricsFromGoogle = await _fetchLyricsFromGoogle(artistName, title);
-    if (lyricsFromGoogle != null) {
-      return lyricsFromGoogle;
-    }
-
-    final lyricsFromParolesNet =
-        await _fetchLyricsFromParolesNet(artistName.split(',')[0], title);
-    if (lyricsFromParolesNet != null) {
-      return lyricsFromParolesNet;
-    }
-
     final lyricsFromLyricsMania1 =
         await _fetchLyricsFromLyricsMania1(artistName, title);
     if (lyricsFromLyricsMania1 != null) {
       return lyricsFromLyricsMania1;
     }
 
-    final lyricsFromLyricsNetCn = await _fetchLyricsFromLyricsNetCn(artistName, title);
-    return lyricsFromLyricsNetCn;
+    final lyricsFromGeciSite = await _fetchLyricsFromGeciSite(artistName, title);
+    return lyricsFromGeciSite;
   }
 
   Future<String?> _fetchLyricsFromLyricsMania1(
@@ -71,7 +60,7 @@ class LyricsManager {
     return null;
   }
 
-	Future<String?> _fetchLyricsFromLyricsNetCn(String artistName, String title) async {
+	Future<String?> _fetchLyricsFromGeciSite(String artistName, String title) async {
 	  try {
 		final searchUrl = Uri.parse('https://www.geci.site/search/?q=${Uri.encodeComponent(title)}');
 		final searchResponse = await http.get(searchUrl);
