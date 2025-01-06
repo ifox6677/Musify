@@ -17,27 +17,40 @@ class LyricsManager {
 		
 	Future<String?> _fetchLyricsFromBaidu(String artistName, String title) async {
 	  try {
-		final searchUrl = Uri.parse('https://www.baidu.com/s?wd=${Uri.encodeComponent(artistName + " " + title + " 歌词")}');
+		// 构建百度搜索 URL
+		final searchUrl = Uri.parse(
+		  'https://www.baidu.com/s?wd=${Uri.encodeComponent(artistName + " " + title + " 歌词")}',
+		);
 
-		final response = await http.get(searchUrl);
+		// 发送 HTTP 请求并设置超时
+		final response = await http.get(searchUrl).timeout(const Duration(seconds: 10));
 
+		// 检查响应状态码
 		if (response.statusCode == 200) {
+		  // 解析 HTML 文档
 		  final document = html_parser.parse(response.body);
 
-		  // 查找所有包含歌词的 <p class="lrc_26wlh"> 标签
+		  // 查找所有包含歌词的标签（根据实际 HTML 结构调整选择器）
 		  final lyricElements = document.querySelectorAll('.lrc-content-box_1TJSD .lrc_26wlh');
 
+		  // 如果找到歌词元素
 		  if (lyricElements.isNotEmpty) {
-			// 提取歌词并将其拼接成一段文本
+			// 提取歌词并拼接成一段文本
 			final lyricsList = lyricElements.map((e) => e.text.trim()).toList();
 			return lyricsList.join('\n');
+		  } else {
+			// 如果没有找到歌词元素
+			return ;
 		  }
+		} else {
+		  // 如果 HTTP 请求失败
+		  return '请求失败，状态码：${response.statusCode}';
 		}
 	  } catch (e) {
+		// 捕获异常并返回错误信息
 		print('Error fetching lyrics: $e');
-		return null;
+		return ;
 	  }
-	  return null;
 	}
 
 
