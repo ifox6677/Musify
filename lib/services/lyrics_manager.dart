@@ -1,6 +1,5 @@
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
-import 'dart:convert';  // 用于处理 JSON 数据
 
 class LyricsManager {
   Future<String?> fetchLyrics(String artistName, String title) async {
@@ -19,30 +18,29 @@ class LyricsManager {
 
 	Future<String?> _fetchLyricsFromBaidu(String artistName, String title) async {
 	  try {
-		final searchUrl = Uri.parse('https://www.baidu.com/s?wd=${Uri.encodeComponent(artistName + " " + title + " 歌词")}');
-
+		// 百度搜索歌词的查询 URL
+		final searchUrl = Uri.parse('https://www.baidu.com/s?wd=${Uri.encodeComponent("$title $artistName 歌词")}');
 		final response = await http.get(searchUrl);
 
 		if (response.statusCode == 200) {
-		  final document = html_parser.parse(response.body);
+		  final body = response.body;
 
-		  // 查找包含歌词的 <script> 标签
-		  final scriptElement = document.querySelector('script');
-		  if (scriptElement != null) {
-			final jsonString = scriptElement.text;
+		  // 用正则提取歌词信息（假设歌词在标记 `<em>` 标签中或在一个特定的格式块中）
+		  final match = RegExp(r'(?<=<em>).*?歌词.*?</em>').firstMatch(body);
+		  if (match != null) {
+			// 提取到的歌词内容
+			String lyrics = match.group(0) ?? '';
 
-			// 解析 JSON 数据
-			final jsonData = jsonDecode(jsonString);
+			// 清理 HTML 标签并格式化
+			lyrics = lyrics.replaceAll(RegExp(r'<[^>]*>'), ''); // 去掉 HTML 标签
+			lyrics = lyrics.trim();
 
-			// 确保 JSON 数据包含歌词信息
-			if (jsonData['lrc'] != null && jsonData['lrc']['lrcArr'] != null) {
-			  final lyricsList = jsonData['lrc']['lrcArr'];
-			  return lyricsList.join('\n');
-			}
+			// 添加版权信息
+			return addCopyright(lyrics, 'https://www.baidu.com');
 		  }
 		}
 	  } catch (e) {
-		print('Error fetching lyrics: $e');
+		// 捕获任何异常并返回 null
 		return null;
 	  }
 	  return null;
