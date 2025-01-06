@@ -6,47 +6,14 @@ class LyricsManager {
     title = title.replaceAll('Lyrics', '').replaceAll('Karaoke', '');
 
 
-    final lyricsFromBaidu = await _fetchLyricsFromBaidu(artistName, title);
-    if (lyricsFromBaidu != null) {
-      return lyricsFromBaidu;
+    final lyricsFromGeciSite = await _fetchLyricsFromGeciSite(artistName, title);
+    if (lyricsFromGeciSite != null) {
+      return lyricsFromGeciSite;
     }
 
-    final lyricsFromGeciSite = await _fetchLyricsFromGeciSite(artistName, title);
-    return lyricsFromGeciSite;
+    final lyricsFromBing = await _fetchLyricsFromBing(artistName, title);
+    return lyricsFromBing;
   }
-		
-	Future<String?> _fetchLyricsFromBaidu(String artistName, String title) async {
-	  try {
-		// 构建百度搜索 URL
-		final searchUrl = Uri.parse(
-		  'https://www.baidu.com/s?wd=${Uri.encodeComponent(title + "歌词")}',
-		);
-
-		// 发送 HTTP 请求并设置超时
-		final response = await http.get(searchUrl).timeout(const Duration(seconds: 10));
-
-		// 检查响应状态码
-		if (response.statusCode == 200) {
-		  // 解析 HTML 文档
-		  final document = html_parser.parse(response.body);
-
-		  // 查找所有包含歌词的标签（根据实际 HTML 结构调整选择器）
-		  final lyricElements = document.querySelectorAll('.lrc-content-box_1TJSD .lrc_26wlh');
-
-		  // 如果找到歌词元素
-		  if (lyricElements.isNotEmpty) {
-			// 提取歌词并拼接成一段文本
-			final lyricsList = lyricElements.map((e) => e.text.trim()).toList();
-			return lyricsList.join('\n');
-		      }
-		    }
-		  } catch (e) {
-		    print('Error fetching lyrics: $e');
-		    return null;
-		  }
-		  return null;
-		}
-
 
   Future<String?> _fetchLyricsFromGeciSite(String artistName, String title) async {
     try {
@@ -83,6 +50,38 @@ class LyricsManager {
         }
       }
     } catch (e) {
+      print('Error fetching lyrics from GeciSite: $e');
+      return null;
+    }
+    return null;
+  }
+
+  Future<String?> _fetchLyricsFromBing(String artistName, String title) async {
+    try {
+      // 构建 Bing 搜索 URL
+      final searchUrl = Uri.parse(
+        'https://www.bing.com/search?q=${Uri.encodeComponent(title + " 歌词")}',
+      );
+
+      // 发送 HTTP 请求并设置超时
+      final response = await http.get(searchUrl).timeout(const Duration(seconds: 10));
+
+      // 检查响应状态码
+      if (response.statusCode == 200) {
+        // 解析 HTML 文档
+        final document = html_parser.parse(response.body);
+
+        // 查找歌词元素
+        final lyricsElement = document.querySelector('.lyrleft .verse.tc_translate');
+
+        if (lyricsElement != null) {
+          // 获取歌词文本并替换 <br/> 为换行符
+          final lyrics = lyricsElement.innerHtml.replaceAll('<br/>', '\n').trim();
+          return lyrics;
+        }
+      }
+    } catch (e) {
+      print('Error fetching lyrics from Bing: $e');
       return null;
     }
     return null;
