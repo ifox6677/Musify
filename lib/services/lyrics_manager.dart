@@ -39,7 +39,12 @@ class LyricsManager {
 
     final lyricsFromLyricsMania1 =
         await _fetchLyricsFromLyricsMania1(artistName, title);
-    return lyricsFromLyricsMania1;
+    if (lyricsFromLyricsMania1 != null) {
+      return lyricsFromLyricsMania1;
+    }
+
+    final lyricsFromLyricsNetCn = await _fetchLyricsFromLyricsNetCn(artistName, title);
+    return lyricsFromLyricsNetCn;
   }
 
   Future<String?> _fetchLyricsFromGoogle(
@@ -124,6 +129,36 @@ class LyricsManager {
       }
     }
 
+    return null;
+  }
+
+  Future<String?> _fetchLyricsFromLyricsNetCn(
+    String artistName,
+    String title,
+  ) async {
+    try {
+      final searchUrl = Uri.parse('https://www.lyrics.net.cn/search/?q=${Uri.encodeComponent(title)}');
+      final searchResponse = await http.get(searchUrl);
+
+      if (searchResponse.statusCode == 200) {
+        final searchDocument = html_parser.parse(searchResponse.body);
+        final lyricsLinkElement = searchDocument.querySelector('.search_title + div a');
+        if (lyricsLinkElement == null) return null;
+        final lyricsPageUrl = 'https://www.lyrics.net.cn${lyricsLinkElement.attributes['href']}';
+
+        final lyricsResponse = await http.get(Uri.parse(lyricsPageUrl));
+        if (lyricsResponse.statusCode == 200) {
+          final lyricsDocument = html_parser.parse(lyricsResponse.body);
+          final lyricsElements = lyricsDocument.querySelectorAll('.lyrics_main > div');
+          if (lyricsElements.isEmpty) return null;
+
+          final lyrics = lyricsElements.map((e) => e.text.trim()).join('\n');
+          return addCopyright(lyrics, 'www.lyrics.net.cn');
+        }
+      }
+    } catch (e) {
+      return null;
+    }
     return null;
   }
 
