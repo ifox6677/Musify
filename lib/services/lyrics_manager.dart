@@ -19,22 +19,30 @@ class LyricsManager {
 
 	Future<String?> _fetchLyricsFromBaidu(String artistName, String title) async {
 	  try {
-		final searchUrl = Uri.parse('https://www.baidu.com/s?wd=${Uri.encodeComponent(artistName + " " + title + " 歌词")}}');
+		final searchUrl = Uri.parse('https://www.baidu.com/s?wd=${Uri.encodeComponent(artistName + " " + title + " 歌词")}');
+
 		final response = await http.get(searchUrl);
 
 		if (response.statusCode == 200) {
 		  final document = html_parser.parse(response.body);
 
-		  // 查找包含歌词的 JSON 数据
-		  final jsonString = document.querySelector('script').text;  // 假设歌词数据在 <script> 标签中
-		  final jsonData = jsonDecode(jsonString);
+		  // 查找包含歌词的 <script> 标签
+		  final scriptElement = document.querySelector('script');
+		  if (scriptElement != null) {
+			final jsonString = scriptElement.text;
 
-		  if (jsonData['lrc'] != null && jsonData['lrc']['lrcArr'] != null) {
-			final lyricsList = jsonData['lrc']['lrcArr'];
-			return lyricsList.join('\n');
+			// 解析 JSON 数据
+			final jsonData = jsonDecode(jsonString);
+
+			// 确保 JSON 数据包含歌词信息
+			if (jsonData['lrc'] != null && jsonData['lrc']['lrcArr'] != null) {
+			  final lyricsList = jsonData['lrc']['lrcArr'];
+			  return lyricsList.join('\n');
+			}
 		  }
 		}
 	  } catch (e) {
+		print('Error fetching lyrics: $e');
 		return null;
 	  }
 	  return null;
