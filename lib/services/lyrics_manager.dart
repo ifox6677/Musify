@@ -19,7 +19,7 @@ class LyricsManager {
 	  try {
 		// 构建百度搜索 URL
 		final searchUrl = Uri.parse(
-		  'https://www.baidu.com/s?wd=${Uri.encodeComponent(artistName + " " + title + " 歌词")}',
+		  'https://www.baidu.com/s?wd=${Uri.encodeComponent(title + "歌词")}',
 		);
 
 		// 发送 HTTP 请求并设置超时
