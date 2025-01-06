@@ -38,20 +38,14 @@ class LyricsManager {
 			// 提取歌词并拼接成一段文本
 			final lyricsList = lyricElements.map((e) => e.text.trim()).toList();
 			return lyricsList.join('\n');
-		  } else {
-			// 如果没有找到歌词元素
-			return ;
+		      }
+		    }
+		  } catch (e) {
+		    print('Error fetching lyrics: $e');
+		    return null;
 		  }
-		} else {
-		  // 如果 HTTP 请求失败
-		  return '请求失败，状态码：${response.statusCode}';
+		  return null;
 		}
-	  } catch (e) {
-		// 捕获异常并返回错误信息
-		print('Error fetching lyrics: $e');
-		return ;
-	  }
-	}
 
 
   Future<String?> _fetchLyricsFromGeciSite(String artistName, String title) async {
