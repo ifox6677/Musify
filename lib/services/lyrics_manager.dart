@@ -47,67 +47,6 @@ class LyricsManager {
     return lyricsFromLyricsNetCn;
   }
 
-  Future<String?> _fetchLyricsFromGoogle(
-    String artistName,
-    String title,
-  ) async {
-    const url =
-        'https://www.google.com/search?client=safari&rls=en&ie=UTF-8&oe=UTF-8&q=';
-    const delimiter1 =
-        '</div></div></div></div><div class="hwc"><div class="BNeawe tAd8D AP7Wnd"><div><div class="BNeawe tAd8D AP7Wnd">';
-    const delimiter2 =
-        '</div></div></div></div></div><div><span class="hwc"><div class="BNeawe uEec3 AP7Wnd">';
-
-    try {
-      final res = await http
-          .get(Uri.parse(Uri.encodeFull('$url$artistName - $title lyrics')))
-          .timeout(const Duration(seconds: 10));
-      final body = res.body;
-      final lyricsRes = body.substring(
-        body.indexOf(delimiter1) + delimiter1.length,
-        body.lastIndexOf(delimiter2),
-      );
-      if (lyricsRes.contains('<meta charset="UTF-8">')) return null;
-      if (lyricsRes.contains('please enable javascript on your web browser'))
-        return null;
-      if (lyricsRes.contains('Error 500 (Server Error)')) return null;
-      if (lyricsRes.contains(
-        'systems have detected unusual traffic from your computer network',
-      )) return null;
-      return lyricsRes;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  Future<String?> _fetchLyricsFromParolesNet(
-    String artistName,
-    String title,
-  ) async {
-    final uri = Uri.parse(
-      'https://www.paroles.net/${_lyricsUrl(artistName)}/paroles-${_lyricsUrl(title)}',
-    );
-    final response = await http.get(uri);
-
-    if (response.statusCode == 200) {
-      final document = html_parser.parse(response.body);
-      final songTextElements = document.querySelectorAll('.song-text');
-
-      if (songTextElements.isNotEmpty) {
-        final lyricsLines = songTextElements.first.text.split('\n');
-        if (lyricsLines.length > 1) {
-          lyricsLines.removeAt(0);
-
-          final finalLyrics =
-              addCopyright(lyricsLines.join('\n'), 'www.paroles.net');
-          return _removeSpaces(finalLyrics);
-        }
-      }
-    }
-
-    return null;
-  }
-
   Future<String?> _fetchLyricsFromLyricsMania1(
     String artistName,
     String title,
@@ -132,35 +71,45 @@ class LyricsManager {
     return null;
   }
 
-  Future<String?> _fetchLyricsFromLyricsNetCn(
-    String artistName,
-    String title,
-  ) async {
-    try {
-      final searchUrl = Uri.parse('https://www.lyrics.net.cn/search/?q=${Uri.encodeComponent(title)}');
-      final searchResponse = await http.get(searchUrl);
+	Future<String?> _fetchLyricsFromLyricsNetCn(String artistName, String title) async {
+	  try {
+		final searchUrl = Uri.parse('https://www.geci.site/search/?q=${Uri.encodeComponent(title)}');
+		final searchResponse = await http.get(searchUrl);
 
-      if (searchResponse.statusCode == 200) {
-        final searchDocument = html_parser.parse(searchResponse.body);
-        final lyricsLinkElement = searchDocument.querySelector('.search_title + div a');
-        if (lyricsLinkElement == null) return null;
-        final lyricsPageUrl = 'https://www.lyrics.net.cn${lyricsLinkElement.attributes['href']}';
+		if (searchResponse.statusCode == 200) {
+		  final searchDocument = html_parser.parse(searchResponse.body);
+		  final lyricsLinks = searchDocument.querySelectorAll('.search_title + div a');
 
-        final lyricsResponse = await http.get(Uri.parse(lyricsPageUrl));
-        if (lyricsResponse.statusCode == 200) {
-          final lyricsDocument = html_parser.parse(lyricsResponse.body);
-          final lyricsElements = lyricsDocument.querySelectorAll('.lyrics_main > div');
-          if (lyricsElements.isEmpty) return null;
+		  if (lyricsLinks.isEmpty) return null;
 
-          final lyrics = lyricsElements.map((e) => e.text.trim()).join('\n');
-          return addCopyright(lyrics, 'www.lyrics.net.cn');
-        }
-      }
-    } catch (e) {
-      return null;
-    }
-    return null;
-  }
+		  // 自动筛选最符合的链接
+		  String? bestMatchUrl;
+		  for (var link in lyricsLinks) {
+			final linkText = link.text.toLowerCase();
+			if (linkText.contains(artistName.toLowerCase())) {
+			  bestMatchUrl = 'https://www.geci.site${link.attributes['href']}';
+			  break;
+			}
+		  }
+
+		  // 如果没有找到完全匹配，选第一个结果
+		  bestMatchUrl ??= 'https://www.geci.site${lyricsLinks.first.attributes['href']}';
+
+		  final lyricsResponse = await http.get(Uri.parse(bestMatchUrl));
+		  if (lyricsResponse.statusCode == 200) {
+			final lyricsDocument = html_parser.parse(lyricsResponse.body);
+			final lyricsElements = lyricsDocument.querySelectorAll('.lyrics_main > div');
+			if (lyricsElements.isEmpty) return null;
+
+			final lyrics = lyricsElements.map((e) => e.text.trim()).join('\n');
+			return addCopyright(lyrics, 'https://www.geci.site');
+		  }
+		}
+	  } catch (e) {
+		return null;
+	  }
+	  return null;
+	}
 
   String _lyricsUrl(String input) {
     var result = input.replaceAll(' ', '-').toLowerCase();
