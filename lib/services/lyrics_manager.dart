@@ -5,7 +5,7 @@ import 'package:flutter_open_chinese_convert/flutter_open_chinese_convert.dart';
 class LyricsManager {
   Future<String?> fetchLyrics(String artistName, String title) async {
     // 将标题从繁体转换为简体
-    title = await ChineseConverter.convert(title, T2S); // 使用 T2S 转换
+    title = await ChineseConverter.convert(title, T2S());
 
     title = title.replaceAll('Lyrics', '').replaceAll('Karaoke', '');
 
