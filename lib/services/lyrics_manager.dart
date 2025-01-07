@@ -1,11 +1,9 @@
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
-import 'package:flutter_open_chinese_convert/flutter_open_chinese_convert.dart'; // 导入简繁体转换库
-
 class LyricsManager {
   Future<String?> fetchLyrics(String artistName, String title) async {
     // 将标题从繁体转换为简体
-    title = await ChineseConverter.convert(title, T2S());
+    //title = await ChineseConverter.convert(title, T2S());
 
     title = title.replaceAll('Lyrics', '').replaceAll('Karaoke', '');
 
