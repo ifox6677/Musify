@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '11.0.24+8'
+          java-version: '17.0.12+7'
 
       # Gradle 缓存加速构建
       - uses: actions/cache@v4
