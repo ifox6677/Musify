@@ -56,36 +56,49 @@ class LyricsManager {
     return null;
   }
 
-  Future<String?> _fetchLyricsFromBing(String artistName, String title) async {
-    try {
-      // 构建 Bing 搜索 URL
-      final searchUrl = Uri.parse(
-        'https://www.bing.com/search?q=${Uri.encodeComponent(title + " 歌词")}',
-      );
 
-      // 发送 HTTP 请求并设置超时
-      final response = await http.get(searchUrl).timeout(const Duration(seconds: 10));
+	Future<String?> _fetchLyricsFromBing(
+	  String artistName, // 歌手名字
+	  String title,      // 歌曲标题
+	) async {
+	  // 定义 Bing 搜索的基础 URL
+	  const url = 'https://www.bing.com/search?q=';
 
-      // 检查响应状态码
-      if (response.statusCode == 200) {
-        // 解析 HTML 文档
-        final document = html_parser.parse(response.body);
+	  // 定义解析 HTML 的起始分隔符
+	  const delimiter1 = '<div class="lyrleft"><div class="lyrics"><div class="verse tc_translate">';
+	  const delimiter2 = '</div><div class="verse tc_translate">';
 
-        // 查找歌词元素
-        final lyricsElement = document.querySelector('.lyrleft .verse.tc_translate');
+	  try {
+		// 构造完整的 Bing 搜索请求 URL（包含编码以确保特殊字符正确处理）
+		final res = await http
+			.get(Uri.parse(Uri.encodeFull('$url $title 歌词')))
+			.timeout(const Duration(seconds: 20)); // 请求超时设置为 10 秒
 
-        if (lyricsElement != null) {
-          // 获取歌词文本并替换 <br/> 为换行符
-          final lyrics = lyricsElement.innerHtml.replaceAll('<br/>', '\n').trim();
-          return lyrics;
-        }
-      }
-    } catch (e) {
-      print('Error fetching lyrics from Bing: $e');
-      return null;
-    }
-    return null;
-  }
+		final body = res.body; // 获取 HTTP 响应的 HTML 内容
+
+		// 检查响应是否包含有效内容
+		if (!body.contains(delimiter1)) return null;
+
+		// 根据分隔符提取歌词的 HTML 片段
+		final lyricsRes = body.substring(
+		  body.indexOf(delimiter1) + delimiter1.length,
+		  body.indexOf(delimiter2, body.indexOf(delimiter1) + delimiter1.length),
+		);
+
+		// 检查提取的内容是否包含一些无效提示
+		if (lyricsRes.contains('Bing helps you turn information into action')) {
+		  return null; // 无效搜索提示
+		}
+
+		// 替换 HTML 标签为纯文本（如 `<br/>` 转换为换行符）
+		final lyrics = lyricsRes.replaceAll('<br/>', '\n').replaceAll(RegExp(r'<[^>]+>'), '');
+
+		return lyrics.trim(); // 返回解析到的歌词内容
+	  } catch (_) {
+		return null; // 捕获异常（如网络错误、超时等），返回 null
+	  }
+	}
+
 
   String _lyricsUrl(String input) {
     var result = input.replaceAll(' ', '-').toLowerCase();
